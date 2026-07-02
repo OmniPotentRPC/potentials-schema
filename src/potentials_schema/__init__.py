@@ -9,7 +9,7 @@ from pathlib import Path
 
 __all__ = ["SCHEMA_ID", "__version__", "load", "schema_path"]
 
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 
 SCHEMA_ID = 0xBD1F89FA17369103
 

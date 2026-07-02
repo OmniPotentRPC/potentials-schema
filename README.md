@@ -40,3 +40,14 @@ it must not replace the arms.
 ```sh
 capnp compile -o- Potentials.capnp > /dev/null
 ```
+
+## Consuming
+
+- **Python (pycapnp)**: `pip install potentials-schema[pycapnp]`, then
+  `potentials_schema.load()` or `potentials_schema.schema_path()`.
+- **meson**: wrap-file pinned to a release tarball; the subproject exposes
+  `Potentials.capnp` at its root.
+- **CMake**: `FetchContent_Declare` on the release tarball URL.
+
+Releases are tagged `vX.Y.Z`; wheels publish to PyPI via OIDC trusted
+publishing and artifacts attach to the GitHub release.

@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "potentials-schema"
-version = "1.0.1"
+version = "1.1.0"
 description = "Canonical Cap'n Proto contract for OmniPotentRPC potential evaluations"
 readme = "README.md"
 license = { file = "LICENSE" }
@@ -26,11 +26,11 @@ pycapnp = ["pycapnp>=2.0"]
 Homepage = "https://github.com/OmniPotentRPC/potentials-schema"
 Source = "https://github.com/OmniPotentRPC/potentials-schema"
 
+[project.scripts]
+potentials-schema = "potentials_schema.__main__:main"
+
 [tool.hatch.build.targets.wheel]
 packages = ["src/potentials_schema"]
-
-[tool.hatch.build.targets.wheel.force-include]
-"Potentials.capnp" = "potentials_schema/Potentials.capnp"
 
 [tool.hatch.build.targets.sdist]
 include = ["src", "Potentials.capnp", "README.md", "LICENSE"]

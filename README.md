@@ -45,9 +45,20 @@ capnp compile -o- Potentials.capnp > /dev/null
 
 - **Python (pycapnp)**: `pip install potentials-schema[pycapnp]`, then
   `potentials_schema.load()` or `potentials_schema.schema_path()`.
+- **From an installed wheel (numpy/metatensor style)**: the package ships a
+  data-only pkg-config module and a CMake config next to the schema.
+  `potentials-schema --include | --schema-path | --pkgconfig-path |
+  --cmake-prefix-path | --schema-id` prints the paths for shell/meson wiring,
+  and `potentials_schema.get_include()/pkgconfig_path()/cmake_prefix_path()`
+  do the same from Python. With `PKG_CONFIG_PATH` extended,
+  `pkg-config --variable=schemafile potentials-schema` locates the contract;
+  with `CMAKE_PREFIX_PATH` extended, `find_package(potentials-schema CONFIG)`
+  sets `POTENTIALS_SCHEMA_FILE`/`POTENTIALS_SCHEMA_DIR`.
 - **meson**: wrap-file pinned to a release tarball; the subproject exposes
-  `Potentials.capnp` at its root.
-- **CMake**: `FetchContent_Declare` on the release tarball URL.
+  `Potentials.capnp` at its root. From a wheel:
+  `run_command('potentials-schema', '--schema-path')`.
+- **CMake**: `FetchContent_Declare` on the release tarball URL, or the wheel's
+  `find_package` config above.
 
 Releases are tagged `vX.Y.Z`; wheels publish to PyPI via OIDC trusted
 publishing and artifacts attach to the GitHub release.

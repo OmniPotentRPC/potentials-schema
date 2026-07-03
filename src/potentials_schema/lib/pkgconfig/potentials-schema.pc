@@ -1,0 +1,7 @@
+prefix=${pcfiledir}/../..
+schemadir=${prefix}
+schemafile=${prefix}/Potentials.capnp
+
+Name: potentials-schema
+Description: Canonical Cap'n Proto contract for OmniPotentRPC potential evaluations
+Version: 1.1.0

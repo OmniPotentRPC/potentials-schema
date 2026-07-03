@@ -4,4 +4,4 @@ schemafile=${prefix}/Potentials.capnp
 
 Name: potentials-schema
 Description: Canonical Cap'n Proto contract for OmniPotentRPC potential evaluations
-Version: 1.11.0
+Version: 1.12.0

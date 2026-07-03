@@ -27,6 +27,11 @@ k mesh, smearing, SCF thresholds) that lower one-way into the native arms.
 Backends apply it first; any knob the native arm also sets wins. It never
 replaces the arms.
 
+## Backend ABI profile
+
+[PROFILE.md](PROFILE.md) defines the minimum prefix-parameterized C symbol
+set a backend shim must export to be plug-compatible with rgpot's loader.
+
 ## Evolution rules
 
 - Field ordinals are append-only. Never renumber, retype, or reuse an

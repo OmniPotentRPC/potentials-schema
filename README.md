@@ -21,9 +21,11 @@ One file, two tiers:
   through each arm's generic escape hatches (`NWChemGenericStanza`,
   `CPMDSetDirective`, `CPMDInputSection.raw`).
 
-A thin normalized convenience struct (xc functional, basis, SCF tolerances)
-that lowers one-way into the native arms can be added later as a new field;
-it must not replace the arms.
+`CommonMethodSpec` (`PotentialConfig.common`) is the thin normalized overlay:
+NOMAD-metainfo-aligned quantities (libxc functional names, Monkhorst-Pack
+k mesh, smearing, SCF thresholds) that lower one-way into the native arms.
+Backends apply it first; any knob the native arm also sets wins. It never
+replaces the arms.
 
 ## Evolution rules
 

@@ -29,7 +29,7 @@ __all__ = [
     "schema_path",
 ]
 
-__version__ = "1.1.1"
+__version__ = "1.2.0"
 
 SCHEMA_ID = 0xBD1F89FA17369103
 

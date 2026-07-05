@@ -36,17 +36,19 @@ parsing, no side-channel config files.
 
 `<P>Result` is the backend's POD `{int ok; double energy_h; char message[512];}`.
 
+## Capability discovery (Capabilities bytes)
+
+| Symbol | Contract |
+| --- | --- |
+| `int <p>_capabilities_result(void *out, size_t capacity, size_t *written)` | Writes a `Capabilities` message describing the backend: name, version, ABI generation, availability, the calculate operations the ABI serves, the `CommonMethodSpec` fields the overlay lowers, and the `PotentialConfig` arms accepted. Returns 0 on success; on a too-small buffer returns -1 with `*written` set to the required size. `out == NULL` with `capacity == 0` is a pure size query. |
+
+Drivers negotiate against this message before dispatch instead of failing at
+runtime. A stub build reports `available = false` with the same operation
+surface as the embed build.
+
 ## Conformance
 
 - nwchemc: exports the full profile.
-- cpmdc: exports the full profile except `cpmdc_calculate_result_from_config`
-  (tracked); `cpmdc_calculate_result` covers the one-shot params path.
+- cpmdc: exports the full profile.
 - Each backend's dlopen test must load every profile symbol from the built
   shared library.
-
-## Capability discovery (planned)
-
-`int <p>_capabilities_result(void *out, size_t capacity, size_t *written)`
-returning a capnp `Capabilities` message (supported operations, lowered
-`CommonMethodSpec` fields, engine name/version) so drivers negotiate before
-dispatch. Tracked alongside the schema struct addition.

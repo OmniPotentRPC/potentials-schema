@@ -1,6 +1,6 @@
 project(
   'potentials-schema',
-  version: '1.14.0',
+  version: '1.14.1',
   meson_version: '>=0.60.0',
   license: 'MIT',
 )

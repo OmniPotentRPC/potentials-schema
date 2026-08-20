@@ -40,7 +40,7 @@ parsing, no side-channel config files.
 
 | Symbol | Contract |
 | --- | --- |
-| `int <p>_capabilities_result(void *out, size_t capacity, size_t *written)` | Writes a `Capabilities` message describing the backend: name, version, ABI generation, availability, the calculate operations the ABI serves, the `CommonMethodSpec` fields the overlay lowers, and the `PotentialConfig` arms accepted. Returns 0 on success; on a too-small buffer returns -1 with `*written` set to the required size. `out == NULL` with `capacity == 0` is a pure size query. |
+| `int <p>_capabilities_result(void *out, size_t capacity, size_t *written)` | Writes a `Capabilities` message describing the backend: name, version, ABI generation, availability, protocol family and revision, schema identity, eindir bridge ABI/layout, DLPack revision, bridge features, the calculate operations the ABI serves, the `CommonMethodSpec` fields the overlay lowers, and the `PotentialConfig` arms accepted. Returns 0 on success; on a too-small buffer returns -1 with `*written` set to the required size. `out == NULL` with `capacity == 0` is a pure size query. |
 
 Drivers negotiate against this message before dispatch instead of failing at
 runtime. A stub build reports `available = false` with the same operation

@@ -42,9 +42,16 @@ parsing, no side-channel config files.
 | --- | --- |
 | `int <p>_capabilities_result(void *out, size_t capacity, size_t *written)` | Writes a `Capabilities` message describing the backend: name, version, ABI generation, availability, protocol family and revision, schema identity, eindir bridge ABI/layout, DLPack revision, bridge features, build version and source revision, the calculate operations the ABI serves, the `CommonMethodSpec` fields the overlay lowers, and the `PotentialConfig` arms accepted. Returns 0 on success; on a too-small buffer returns -1 with `*written` set to the required size. `out == NULL` with `capacity == 0` is a pure size query. |
 
+`buildVersion` (@18) is the version of the producing build and `buildRevision`
+(@19) is its source revision. Both are empty `Text` when that build does not
+know them; an empty value is not a protocol mismatch. `Potential.getCapabilities`
+(@12) returns the same `Capabilities` message on the RPC interface. No existing
+ordinal is renumbered. The file id stays `@0xbd1f89fa17369103`.
+
 Drivers negotiate against this message before dispatch instead of failing at
-runtime. A stub build reports `available = false` with the same operation
-surface as the embed build.
+runtime. A missing protocol family, schema id, bridge ABI, layout or DLPack
+major is a refusal. A stub build reports `available = false` with the same
+operation surface as the embed build.
 
 ## Conformance
 

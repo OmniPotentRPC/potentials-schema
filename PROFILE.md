@@ -53,6 +53,23 @@ runtime. A missing protocol family, schema id, bridge ABI, layout or DLPack
 major is a refusal. A stub build reports `available = false` with the same
 operation surface as the embed build.
 
+## Runtime fields of the ML arms
+
+`UmaParams` and `MetatomicParams` carry the tensor-runtime settings an engine
+applies when it creates the model, so a host that does not link the runtime
+(an engine plugin is opened with `dlopen` and linked to its own libtorch) still
+chooses them.
+
+| Field | Arms | Default | Contract |
+| --- | --- | --- | --- |
+| `intraopThreads` | `UmaParams` @7, `MetatomicParams` @7 | 1 | Intra-op worker threads. A value below 1 leaves the runtime's setting alone. Process wide in effect. |
+| `interopThreads` | `UmaParams` @8, `MetatomicParams` @8 | 1 | Inter-op worker threads. The runtime accepts the setting once per process, before the first parallel work; an engine reports a refusal instead of ignoring it. |
+| `deterministicAlgorithms` | `UmaParams` @9 | false | Request deterministic algorithms. |
+| `torchDeterminism` | `MetatomicParams` @12 | `fast` | `strict` is the deterministic-algorithms request for this arm: deterministic algorithms, math attention backend, no TF32. |
+| `nSymmetryRotations`, `randomRotation`, `so3ProbeScatter` | `MetatomicParams` @9 to @11 | 0, false, false | Rotation averaging and the SO(3) probe, as in `MetatomicConfig`. |
+
+A reader that predates a field sees its default.
+
 ## Conformance
 
 - nwchemc: exports the full profile.

@@ -6,6 +6,17 @@ by `meson.build` and `pyproject.toml`.
 
 ## Unreleased (1.15.1)
 
+- Append `UmaParams.intraopThreads` @7 and `interopThreads` @8 (`Int32`,
+  default 1) and `deterministicAlgorithms` @9 (`Bool`, default false). An
+  engine applies them once when it creates the model, so a host that does not
+  link the tensor runtime still controls its threading and determinism.
+- Append `MetatomicParams.intraopThreads` @7 and `interopThreads` @8 (same
+  meaning), `nSymmetryRotations` @9 (`Int64`, 0), `randomRotation` @10,
+  `so3ProbeScatter` @11 (`Bool`, false) and `torchDeterminism` @12
+  (`MetatomicParams.TorchDeterminism`, `fast` or `strict`). They mirror
+  rgpot's `MetatomicConfig`. `strict` is the deterministic-algorithms request
+  for this arm, so it has no separate flag. No existing ordinal changes. The
+  file id stays `@0xbd1f89fa17369103`.
 - Append `Capabilities.buildVersion` @18 and `Capabilities.buildRevision` @19.
   Both are `Text` and empty when the producing build has no version or source
   revision. No existing ordinal changes. The file id stays

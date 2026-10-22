@@ -2548,13 +2548,13 @@ struct TBLiteParams {
 struct D3Params {
   functional @0 :Text = "pbe";
   damping @1 :Text = "bj"; # bj or zero.
-  atm @2 :Bool = false;
+  atm @2 :Bool = true;
 }
 
 struct D4Params {
   functional @0 :Text = "pbe";
   charge @1 :Float64 = 0.0;
-  atm @2 :Bool = false;
+  atm @2 :Bool = true;
 }
 
 struct MOPACParams {

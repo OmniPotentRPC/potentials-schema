@@ -37,7 +37,7 @@ set a backend shim must export to be plug-compatible with rgpot's loader.
 - Field ordinals are append-only. Never renumber, retype, or reuse an
   ordinal; deprecate by comment.
 - New backends claim the next free `PotentialConfig` union ordinal
-  (`metatomic @3`, `xtb @4`, `tblite @5` are reserved in comments).
+  without reusing an existing ordinal.
 - The file ID `@0xbd1f89fa17369103` never changes.
 - Every change lands here first; consumers vendor or pin this repo and their
   CI must fail when their copy diverges.
@@ -69,3 +69,19 @@ capnp compile -o- Potentials.capnp > /dev/null
 
 Releases are tagged `vX.Y.Z`; wheels publish to PyPI via OIDC trusted
 publishing and artifacts attach to the GitHub release.
+
+## Native potential configuration
+
+`PotentialConfig` carries native constructor settings as well as engine settings.
+For example, a platinum Morse configuration can be encoded with the schema tools:
+
+```sh
+printf '%s\n' '(morse = (de = 0.7102, a = 1.6047, re = 2.897, cutoff = 9.5))' | \
+  capnp encode Potentials.capnp PotentialConfig > platinum.bin
+capnp decode Potentials.capnp PotentialConfig < platinum.bin
+```
+
+The selected union arm identifies the parameter type. A consumer must reject an
+arm that does not match the selected backend. `builtin.config` lets a named
+native backend carry the same settings inside a `PotentialSpec`; expression
+terms use `PotSpec.potential` for such leaves and `PotSpec.expr` for nested sums.

@@ -1974,6 +1974,13 @@ struct MetatomicParams {
   so3ProbeScatter    @11 :Bool = false; # Probe the SO(3) scatter path.
   torchDeterminism   @12 :TorchDeterminism = fast;
 
+  lengthUnit @13 :Text = "angstrom";
+  enginePath @14 :Text;
+  taskName @15 :Text;
+  charge @16 :Int32 = 0;
+  spin @17 :Int32 = 1;
+  attachSystemExtras @18 :Bool = false;
+
   enum TorchDeterminism {
     fast          @0; # Leave the process-global torch flags alone.
     deterministic @1; # Deterministic algorithms, math SDP attention, no TF32.
@@ -2034,6 +2041,7 @@ struct PotentialSpec {
 struct BuiltinParams {
   name @0 :Text;   # e.g. "lj", "cuh2", "xtb", "morse".
   library @1 :Text = "";  # Optional explicit engine library path.
+  config @2 :PotentialConfig; # Native constructor settings for the named backend.
 }
 
 # @struct GprParams
@@ -2499,6 +2507,93 @@ struct NWChemCdftSpec {
   }
 }
 
+# Native constructor settings use the same defaults as rgpot's C++ configs.
+# Geometry, species and units remain on ForceInput.
+struct LennardJonesParams {
+  u0 @0 :Float64 = 1.0;
+  psi @1 :Float64 = 1.0;
+  cutoff @2 :Float64 = 15.0;
+}
+
+struct MorseParams {
+  de @0 :Float64 = 0.7102;
+  a @1 :Float64 = 1.6047;
+  re @2 :Float64 = 2.897;
+  cutoff @3 :Float64 = 9.5;
+}
+
+struct ZBLParams {
+  cutInner @0 :Float64 = 2.0;
+  cutGlobal @1 :Float64 = 2.5;
+}
+
+struct XTBParams {
+  method @0 :Text = "gfn2"; # gfn0, gfn1, gfn2 or gfnff.
+  accuracy @1 :Float64 = 1.0;
+  electronicTemperature @2 :Float64 = 300.0; # Kelvin.
+  maxIterations @3 :Int32 = 250;
+  charge @4 :Float64 = 0.0;
+  uhf @5 :Int32 = 0;
+}
+
+struct TBLiteParams {
+  method @0 :Text = "gfn2"; # gfn1, gfn2 or ipea1.
+  accuracy @1 :Float64 = 1.0;
+  electronicTemperature @2 :Float64 = 300.0; # Kelvin.
+  maxIterations @3 :Int32 = 250;
+  charge @4 :Float64 = 0.0;
+  uhf @5 :Int32 = 0;
+}
+
+struct D3Params {
+  functional @0 :Text = "pbe";
+  damping @1 :Text = "bj"; # bj or zero.
+  atm @2 :Bool = false;
+}
+
+struct D4Params {
+  functional @0 :Text = "pbe";
+  charge @1 :Float64 = 0.0;
+  atm @2 :Bool = false;
+}
+
+struct MOPACParams {
+  charge @0 :Int32 = 0;
+  spin @1 :Int32 = 0; # Spin excitations, not multiplicity.
+  model @2 :Int32 = 4; # AM1.
+  tolerance @3 :Float64 = 1.0;
+  maxTime @4 :Int32 = 3600;
+  enginePath @5 :Text;
+}
+
+struct SkalaParams {
+  xc @0 :Text = "skala-1.1";
+  basis @1 :Text = "def2-tzvp";
+  charge @2 :Int32 = 0;
+  multiplicity @3 :Int32 = 1;
+  enginePath @4 :Text;
+  nwchemRoot @5 :Text;
+}
+
+# A named term may contain another expression or a configured leaf.
+struct ExprTerm {
+  name @0 :Text;
+  pot @1 :PotSpec;
+}
+
+struct ExprParams {
+  expression @0 :Text;
+  terms @1 :List(ExprTerm);
+}
+
+struct PotSpec {
+  union {
+    expr @0 :ExprParams;
+    none @1 :Void;
+    potential @2 :PotentialSpec;
+  }
+}
+
 # @struct PotentialConfig
 # @brief **rgpot user parameters (extensible, in/out via Cap'n Proto only).**
 #
@@ -2517,8 +2612,17 @@ struct PotentialConfig {
     cpmd      @2 :CPMDParams;   # CPMDPot / potserv ... OpenCPMD
     metatomic @4 :MetatomicParams; # MetatomicPot (torch ML models)
     lammps    @5 :LammpsParams;    # lammpc dynlib shim (LAMMPS library API)
-    # xtb       @6 :XTBParams;
-    # tblite    @7 :TBLiteParams;
+    xtb       @6 :XTBParams;
+    tblite    @7 :TBLiteParams;
+    uma       @8 :UmaParams;
+    lj        @9 :LennardJonesParams; # LJPot or LJClusterPot, selected by name.
+    morse     @10 :MorseParams;
+    zbl       @11 :ZBLParams;
+    d3        @12 :D3Params;
+    d4        @13 :D4Params;
+    mopac     @14 :MOPACParams;
+    skala     @15 :SkalaParams;
+    expr      @16 :ExprParams;
   }
   # Normalized overlay applied BEFORE the native arm; native settings win.
   common @3 :CommonMethodSpec;

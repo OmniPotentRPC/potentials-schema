@@ -13,10 +13,10 @@ One file, two tiers:
   geometry/cell/units, `PotentialResult` for energies, forces, Hessians,
   stress, properties, frequencies, and thermochemistry, plus the `Potential`
   RPC interface.
-- **Backend arms** (code-native method config): `NWChemParams` and
-  `CPMDParams` inside the `PotentialConfig` union. Each arm mirrors its own
-  code's input language (NWChem stanzas and RTDB sets, CPMD `&SECTION`
-  decks). Arms are layered side by side and never normalized into a common
+- **Backend arms** (code-native method config): `NWChemParams`,
+  `CPMDParams` and `CP2KParams` inside the `PotentialConfig` union. Each arm mirrors its own
+  code's input language (NWChem stanzas and RTDB sets, CPMD and CP2K
+  `&SECTION` decks). Arms are layered side by side and never normalized into a common
   config vocabulary; the long tail of code-specific knobs stays code-specific
   through each arm's generic escape hatches (`NWChemGenericStanza`,
   `CPMDSetDirective`, `CPMDInputSection.raw`).

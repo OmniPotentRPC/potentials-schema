@@ -1,7 +1,12 @@
 # Changelog
 
-## Unreleased
+## Unreleased (1.16.0)
 
+- Add `CP2KParams` and the CP2K arms `PotentialSpec.cp2k` @6 and
+  `PotentialConfig.cp2k` @17. Typed fields render a default Quickstep deck;
+  `inputTemplate` carries a verbatim deck with `@RGPOT_COORD@` and
+  `@RGPOT_CELL@` tokens. No existing ordinal changes. The file id stays
+  `@0xbd1f89fa17369103`.
 - Carry native analytic, semiempirical and composite potential settings in
   `PotentialConfig`, including recursively configured expression terms.
 - Complete the metatomic constructor settings in its existing parameter arm.

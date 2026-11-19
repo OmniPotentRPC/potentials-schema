@@ -12,6 +12,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install capnproto
-        run: sudo apt-get update && sudo apt-get install -y capnproto
+        run: sudo apt-get update && sudo apt-get install -y capnproto libcapnp-dev meson ninja-build
       - name: Parse schema
         run: capnp compile -o- Potentials.capnp > /dev/null
+      - name: Run meson tests
+        run: |
+          meson setup build
+          meson test -C build --print-errorlogs

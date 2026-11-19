@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## Unreleased (1.16.0)
 
 - Append `CPMDSystemSection.hasCharge` @91, `CPMDParams.hasCharge` @13 and
   `CommonMethodSpec.hasCharge` @12 (`Bool`, default false) so backends can

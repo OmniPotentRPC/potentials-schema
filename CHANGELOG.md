@@ -1,5 +1,9 @@
 # Changelog
 
+This repository tags releases `vX.Y.Z`. GitHub release notes are generated from
+the tag. This file records the schema changes in the unreleased version named
+by `meson.build` and `pyproject.toml`.
+
 ## Unreleased (1.16.0)
 
 - Append `CPMDSystemSection.hasCharge` @91, `CPMDParams.hasCharge` @13 and
@@ -9,13 +13,6 @@
 - Carry native analytic, semiempirical and composite potential settings in
   `PotentialConfig`, including recursively configured expression terms.
 - Complete the metatomic constructor settings in its existing parameter arm.
-
-This repository tags releases `vX.Y.Z`. GitHub release notes are generated from
-the tag. This file records the schema changes in the unreleased version named
-by `meson.build` and `pyproject.toml`.
-
-## Unreleased (1.15.1)
-
 - Append `UmaParams.intraopThreads` @7 and `interopThreads` @8 (`Int32`,
   default 1) and `deterministicAlgorithms` @9 (`Bool`, default false). An
   engine applies them once when it creates the model, so a host that does not

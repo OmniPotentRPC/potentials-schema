@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Append `CPMDSystemSection.hasCharge` @91, `CPMDParams.hasCharge` @13 and
+  `CommonMethodSpec.hasCharge` @12 (`Bool`, default false) so backends can
+  distinguish an explicit zero charge from an unset charge. No existing
+  ordinal changes. The file id stays `@0xbd1f89fa17369103`.
 - Carry native analytic, semiempirical and composite potential settings in
   `PotentialConfig`, including recursively configured expression terms.
 - Complete the metatomic constructor settings in its existing parameter arm.

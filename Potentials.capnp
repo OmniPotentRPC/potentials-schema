@@ -1364,6 +1364,7 @@ struct CPMDSystemSection {
   classicalCellDegree @88 :Bool = false;   # CLASSICAL CELL DEGREE.
   cellVectors @89 :Bool = false;            # CELL VECTORS.
   referenceCellVectors @90 :Bool = false;   # REFERENCE CELL VECTORS.
+  hasCharge @91 :Bool = false;              # @brief Mark CPMDSystemSection.charge as explicit, including zero.
 }
 
 struct CPMDCpmdSection {
@@ -1901,6 +1902,7 @@ struct CPMDParams {
   enginePath   @10 :Text = "";        # Frontend engine selection hint.
   inputBlocks  @11 :List(Text);       # Raw &SECTION blocks applied before generated ones.
   inputSections @12 :List(CPMDInputSection); # Structured CPMD input sections.
+  hasCharge @13 :Bool = false;        # @brief Mark CPMDParams.charge as explicit, including zero.
   # Long-tail options: use CPMDInputSection.raw, inputBlocks, or set.
 }
 
@@ -1926,6 +1928,7 @@ struct CommonMethodSpec {
   relativityMethod  @10 :Text = "";    # e.g. "ZORA", "DKH".
   vanDerWaalsS6     @11 :Float64 = 0.0; # Global dispersion scaling s6; 0 = engine default.
                                         # Lowers to dft:vdw (NWChem) / vdwParams.s6 (CPMD).
+  hasCharge @12 :Bool = false;         # @brief Mark CommonMethodSpec.charge as explicit, including zero.
 
   struct Smearing {
     kind    @0 :Kind = none;

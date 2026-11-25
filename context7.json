@@ -2,9 +2,6 @@
   "$schema": "https://context7.com/schema/context7.json",
   "projectTitle": "potentials-schema",
   "description": "Canonical Cap'n Proto contract for OmniPotentRPC potential evaluations.",
-  "folders": [
-    "src"
-  ],
   "excludeFolders": [
     "tests",
     ".github"

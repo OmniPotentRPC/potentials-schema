@@ -1,0 +1,17 @@
+{
+  "$schema": "https://context7.com/schema/context7.json",
+  "projectTitle": "potentials-schema",
+  "description": "Canonical Cap'n Proto contract for OmniPotentRPC potential evaluations.",
+  "excludeFolders": [
+    "tests",
+    ".github"
+  ],
+  "excludeFiles": [
+    "CHANGELOG.md",
+    "CODE_OF_CONDUCT.md",
+    "LICENSE"
+  ],
+  "rules": [
+    "Potentials.capnp is the single source of truth; consumers vendor it, never edit copies."
+  ]
+}
